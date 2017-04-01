@@ -9,20 +9,19 @@ class Bst
   end
 
   def insert(data, current_node = initial)
-    placement = if data <= current_node.data
-      {set_left: current_node.left}
+    placement = data <= current_node.data ? 'left' : 'right'
+    if current_node.send(eval":#{placement}").nil?
+      return current_node.send(eval(":set_#{placement}"), Node.new(data: data))
     else
-      {set_right: current_node.right}
+      insert(data, placement.values.first)
     end
-    return current_node.send(placement.keys.first, Node.new(data: data)) if placement.values.first.nil?
-    insert(data, placement.values.first)
   end
 
   def left
     initial.left
   end
-  #
-  # def right
-  #
-  # end
+
+  def right
+    initial.right
+  end
 end
