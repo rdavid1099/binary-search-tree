@@ -1,4 +1,5 @@
 require_relative 'node'
+require 'pry'
 
 class Bst
   attr_reader :initial, :data
@@ -21,5 +22,9 @@ class Bst
 
   def right
     initial.right
+  end
+
+  def each(&block)
+    loop { block.call(value!!!) }
   end
 end
