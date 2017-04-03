@@ -1,7 +1,6 @@
 require_relative 'node'
-require 'pry'
-
 class Bst
+  VERSION = 1
   attr_reader :initial, :data
 
   def initialize(initial_data)
@@ -25,6 +24,18 @@ class Bst
   end
 
   def each(&block)
-    loop { block.call(value!!!) }
+    in_order = get_in_order
+    return in_order.each if block == nil
+    in_order.each { |data| block.call(data) }
+  end
+
+  private
+  def get_in_order(node = initial, result = [])
+    if node
+      get_in_order(node.left, result)
+      result << node.data
+      get_in_order(node.right, result)
+    end
+    result
   end
 end
